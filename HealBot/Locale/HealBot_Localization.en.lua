@@ -1,4 +1,4 @@
-HEALBOT_VERSION = "3.3.5.0";
+HEALBOT_VERSION = "3.3.5.5";
 HealBotSkinVersion = 17;
 
 -------------

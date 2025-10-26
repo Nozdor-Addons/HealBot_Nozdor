@@ -1,3 +1,14 @@
+
+-- Injected safe length helper to avoid getn(nil) errors
+local function HealBot_SafeLen(t)
+    if type(t) == "table" then
+        return #t
+    end
+    return 0
+end
+-- Back-compat local alias used by patched call sites
+local HB_LEN = HB_LEN or HealBot_SafeLen
+
 local HealBot_Options_ComboButtons_Button=1;
 local HealBot_Options_Opened=false;
 local HealBot_Options_SoftReset_flag=false;
@@ -194,7 +205,7 @@ end
 
 function HealBot_Options_InitBuffList()
     HealBot_Buff_Spells_List ={}
-    for j=1, getn(HealBot_Buff_Spells_Class_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_Class_List), 1 do
         sID=HealBot_GetSpellId(HealBot_Buff_Spells_Class_List[j]);
         if sID then
             table.insert(HealBot_Buff_Spells_List,HealBot_Buff_Spells_Class_List[j])
@@ -2002,7 +2013,7 @@ function HealBot_Options_BarHealthNumFormat1_DropDown()
     else
         HealBot_Options_BarHealthNumFormat1_List=HealBot_Options_BarHealthNumFormat1p_List
     end
-    for j=1, getn(HealBot_Options_BarHealthNumFormat1_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BarHealthNumFormat1_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2051,7 +2062,7 @@ local HealBot_Options_BarHealthNumFormat2_List = {
 }
 
 function HealBot_Options_BarHealthNumFormat2_DropDown()
-    for j=1, getn(HealBot_Options_BarHealthNumFormat2_List), 2 do
+    for j=1, HB_LEN(HealBot_Options_BarHealthNumFormat2_List), 2 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2084,7 +2095,7 @@ end
 --------------------------------------------------------------------------------
 
 function HealBot_Options_BarHealthNumFormatAggro_DropDown()
-    for j=1, getn(HealBot_Options_BarHealthNumFormat2_List), 2 do
+    for j=1, HB_LEN(HealBot_Options_BarHealthNumFormat2_List), 2 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2123,7 +2134,7 @@ local HealBot_Options_BarHealthIncHeal_List = {
 }
 
 function HealBot_Options_BarHealthIncHeal_DropDown()
-    for j=1, getn(HealBot_Options_BarHealthIncHeal_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BarHealthIncHeal_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2163,7 +2174,7 @@ local HealBot_Options_BarHealthType_List = {
 }
 
 function HealBot_Options_BarHealthType_DropDown()
-    for j=1, getn(HealBot_Options_BarHealthType_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BarHealthType_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2210,7 +2221,7 @@ local HealBot_Options_HealCommMethod_List = {
 }
 
 function HealBot_Options_HealCommMethod_DropDown()
-    for j=1, getn(HealBot_Options_HealCommMethod_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_HealCommMethod_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2284,7 +2295,7 @@ local HealBot_Options_CastButton_List = {
 }
 
 function HealBot_Options_CastButton_DropDown()
-    for j=1, getn(HealBot_Options_CastButton_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_CastButton_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2323,7 +2334,7 @@ local HealBot_Options_ButtonCastMethod_List = {
 }
 
 function HealBot_Options_ButtonCastMethod_DropDown()
-    for j=1, getn(HealBot_Options_ButtonCastMethod_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_ButtonCastMethod_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2369,7 +2380,7 @@ local HealBot_Options_MouseWheelModKey_List = {
 }
 
 function HealBot_Options_MouseWheelModKey_DropDown()
-    for j=1, getn(HealBot_Options_MouseWheelModKey_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_MouseWheelModKey_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2419,7 +2430,7 @@ local HealBot_Options_hbCommands_List = {
 HealBot_Options_StorePrev["hbCommands"] = 1
 
 function HealBot_Options_hbCommands_DropDown()
-    for j=1, getn(HealBot_Options_hbCommands_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_hbCommands_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2487,7 +2498,7 @@ local HealBot_Options_EmergencyFClass_List = {
 }
 
 function HealBot_Options_EmergencyFClass_DropDown()
-    for j=1, getn(HealBot_Options_EmergencyFClass_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_EmergencyFClass_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2589,7 +2600,7 @@ local HealBot_Options_ExtraSubSort_List = {
 }
 
 function HealBot_Options_ExtraSort_DropDown()
-    for j=1, getn(HealBot_Options_ExtraSort_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_ExtraSort_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2600,7 +2611,7 @@ function HealBot_Options_ExtraSort_DropDown()
 end
 
 function HealBot_Options_ExtraSubSort_DropDown()
-    for j=1, getn(HealBot_Options_ExtraSubSort_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_ExtraSubSort_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2667,7 +2678,7 @@ local HealBot_Options_ActionBarsCombo_List = {
 }
 
 function HealBot_Options_ActionBarsCombo_DropDown()
-    for j=1, getn(HealBot_Options_ActionBarsCombo_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_ActionBarsCombo_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -2737,8 +2748,8 @@ local HealBot_Options_SelectHealSpellsCombo_List = {
 local hbHelpHealSelect=nil
 local hbHealDDlist=nil
 function HealBot_Options_SelectHealSpellsCombo_DropDown()
-    if getn(hbHealDDlist)>0 then
-        for j=1, getn(hbHealDDlist), 1 do
+    if HB_LEN(hbHealDDlist)>0 then
+        for j=1, HB_LEN(hbHealDDlist), 1 do
             for x,_ in pairs(info) do
                 info[x]=nil;
             end
@@ -2760,7 +2771,7 @@ end
 
 function HealBot_Options_SelectHealSpellsCombo_DDlist()
     hbHealDDlist={}
-    for j=1, getn(HealBot_Options_SelectHealSpellsCombo_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_SelectHealSpellsCombo_List), 1 do
         if HealBot_GetSpellId(HealBot_Options_SelectHealSpellsCombo_List[j]) then
             table.insert(hbHealDDlist, HealBot_Options_SelectHealSpellsCombo_List[j])
         end
@@ -2830,8 +2841,8 @@ local hbHelpOtherSelect=nil
 local hbOtherDDlist=nil
 
 function HealBot_Options_SelectOtherSpellsCombo_DropDown()
-    if getn(hbOtherDDlist)>0 then
-        for j=1, getn(hbOtherDDlist), 1 do
+    if HB_LEN(hbOtherDDlist)>0 then
+        for j=1, HB_LEN(hbOtherDDlist), 1 do
             for x,_ in pairs(info) do
                 info[x]=nil;
             end
@@ -2853,12 +2864,12 @@ end
 
 function HealBot_Options_SelectOtherSpellsCombo_DDlist()
     hbOtherDDlist={}
-    for j=1, getn(HealBot_Options_SelectOtherSpellsCombo_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_SelectOtherSpellsCombo_List), 1 do
         if HealBot_GetSpellId(HealBot_Options_SelectOtherSpellsCombo_List[j]) then
             table.insert(hbOtherDDlist,HealBot_Options_SelectOtherSpellsCombo_List[j])
         end
     end
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         table.insert(hbOtherDDlist,HealBot_Buff_Spells_List[j])
     end
     table.sort(hbOtherDDlist)
@@ -3006,13 +3017,13 @@ local hbHelpItemSelect=nil
 
 function HealBot_Options_SelectItemsCombo_DropDown()
     HealBot_Options_SelectItemsCombo_List=HealBot_Options_itemsByLevel(hbLevel)
-    for j=1, getn(hbItemsIfExists), 1 do
+    for j=1, HB_LEN(hbItemsIfExists), 1 do
         if IsUsableItem(hbItemsIfExists[j]) then
             table.insert(HealBot_Options_SelectItemsCombo_List, hbItemsIfExists[j])
         end
     end
     table.sort(HealBot_Options_SelectItemsCombo_List)
-    for j=1, getn(HealBot_Options_SelectItemsCombo_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_SelectItemsCombo_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3061,7 +3072,7 @@ local HealBot_Options_SelectCmdsCombo_List = {
 
 local hbHelpCmdsSelect=nil
 function HealBot_Options_SelectCmdsCombo_DropDown()
-    for j=1, getn(HealBot_Options_SelectCmdsCombo_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_SelectCmdsCombo_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3173,7 +3184,7 @@ local HealBot_Options_ActionAnchor_List = {
 }
 
 function HealBot_Options_ActionAnchor_DropDown()
-    for j=1, getn(HealBot_Options_ActionAnchor_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_ActionAnchor_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3328,7 +3339,7 @@ function HealBot_Options_Class_HoTctlName_genList()
     end
     table.sort(HoTctlName_List)
     x=nil
-    for j=1, getn(HoTctlName_List), 1 do
+    for j=1, HB_LEN(HoTctlName_List), 1 do
         if HoTctlName_List[j]==HealBot_Globals.HoTname then
             HealBot_Globals.HoTindex=j
             x=true
@@ -3340,7 +3351,7 @@ function HealBot_Options_Class_HoTctlName_genList()
 end
 
 function HealBot_Options_Class_HoTctlName_DropDown()
-    for j=1, getn(HoTctlName_List), 1 do
+    for j=1, HB_LEN(HoTctlName_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3382,7 +3393,7 @@ local HealBot_Options_Class_HoTctlAction_List = {
 }
 
 function HealBot_Options_Class_HoTctlAction_DropDown()
-    for j=1, getn(HealBot_Options_Class_HoTctlAction_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_Class_HoTctlAction_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3434,7 +3445,7 @@ HealBot_Options_StorePrev["FilterHoTctlID"]=1
 
 function HealBot_Options_FilterHoTctl_DropDown()
     table.sort(HealBot_Options_FilterHoTctl_List)
-    for j=1, getn(HealBot_Options_FilterHoTctl_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_FilterHoTctl_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3484,7 +3495,7 @@ local HealBot_Options_SkinDefault_List = {
 }
 
 function HealBot_Options_SkinDefault_DropDown()
-    for j=1, getn(HealBot_Options_SkinDefault_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_SkinDefault_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3532,7 +3543,7 @@ local HealBot_Options_AggroAlertLevel_List = {
 }
 
 function HealBot_Options_AggroAlertLevel_DropDown()
-    for j=1, getn(HealBot_Options_AggroAlertLevel_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_AggroAlertLevel_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3582,7 +3593,7 @@ local HealBot_Options_EmergencyFilter_List = {
 }
 
 function HealBot_Options_EmergencyFilter_DropDown()
-    for j=1, getn(HealBot_Options_EmergencyFilter_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_EmergencyFilter_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3711,7 +3722,7 @@ end
 --------------------------------------------------------------------------------
 
 function HealBot_Options_Skins_DropDown()
-    for j=1, getn(HealBot_Skins), 1 do
+    for j=1, HB_LEN(HealBot_Skins), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -3756,7 +3767,7 @@ function HealBot_Options_Set_Current_Skin(newSkin)
         if newSkin then
             local hbFoundSkin=nil
             local hbValidSkins=nil
-            for j=1, getn(HealBot_Skins), 1 do
+            for j=1, HB_LEN(HealBot_Skins), 1 do
                 if newSkin==HealBot_Skins[j] then
                     hbFoundSkin=true
                     HealBot_RaidTargetToggle(nil) 
@@ -3989,7 +4000,7 @@ end
 
 function HealBot_Options_checkSkinName(skinName)
     local hbFoundSkin=nil
-    for j=1, getn(HealBot_Skins), 1 do
+    for j=1, HB_LEN(HealBot_Skins), 1 do
         if skinName==HealBot_Skins[j] then
             hbFoundSkin=true
             do break end
@@ -4414,7 +4425,7 @@ local HealBot_Options_TooltipPos_List = {
 }
 
 function HealBot_Options_TooltipPos_DropDown()
-    for j=1, getn(HealBot_Options_TooltipPos_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_TooltipPos_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4455,7 +4466,7 @@ function HealBot_Options_BuffTxt1_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt1_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4472,7 +4483,7 @@ function HealBot_Options_BuffTxt2_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt2_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4489,7 +4500,7 @@ function HealBot_Options_BuffTxt3_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt3_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4506,7 +4517,7 @@ function HealBot_Options_BuffTxt4_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt4_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4523,7 +4534,7 @@ function HealBot_Options_BuffTxt5_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt5_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4540,7 +4551,7 @@ function HealBot_Options_BuffTxt6_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt6_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4557,7 +4568,7 @@ function HealBot_Options_BuffTxt7_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt7_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4574,7 +4585,7 @@ function HealBot_Options_BuffTxt8_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt8_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4591,7 +4602,7 @@ function HealBot_Options_BuffTxt9_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt9_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4608,7 +4619,7 @@ function HealBot_Options_BuffTxt10_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_BuffTxt10_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(HealBot_Buff_Spells_List), 1 do
+    for j=1, HB_LEN(HealBot_Buff_Spells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4619,7 +4630,7 @@ function HealBot_Options_BuffTxt10_DropDown()
 end
 
 function HealBot_Options_BuffGroups1_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4630,7 +4641,7 @@ function HealBot_Options_BuffGroups1_DropDown()
 end
 
 function HealBot_Options_BuffGroups2_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4641,7 +4652,7 @@ function HealBot_Options_BuffGroups2_DropDown()
 end
 
 function HealBot_Options_BuffGroups3_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4652,7 +4663,7 @@ function HealBot_Options_BuffGroups3_DropDown()
 end
 
 function HealBot_Options_BuffGroups4_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4663,7 +4674,7 @@ function HealBot_Options_BuffGroups4_DropDown()
 end
 
 function HealBot_Options_BuffGroups5_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4674,7 +4685,7 @@ function HealBot_Options_BuffGroups5_DropDown()
 end
 
 function HealBot_Options_BuffGroups6_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4685,7 +4696,7 @@ function HealBot_Options_BuffGroups6_DropDown()
 end
 
 function HealBot_Options_BuffGroups7_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4696,7 +4707,7 @@ function HealBot_Options_BuffGroups7_DropDown()
 end
 
 function HealBot_Options_BuffGroups8_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4707,7 +4718,7 @@ function HealBot_Options_BuffGroups8_DropDown()
 end
 
 function HealBot_Options_BuffGroups9_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -4718,7 +4729,7 @@ function HealBot_Options_BuffGroups9_DropDown()
 end
 
 function HealBot_Options_BuffGroups10_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5259,7 +5270,7 @@ function HealBot_Options_CDCTxt1_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_CDCTxt1_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(DebuffSpells_List), 1 do
+    for j=1, HB_LEN(DebuffSpells_List), 1 do
         sName, _=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[j]));
         if sName then
             for x,_ in pairs(info) do
@@ -5270,7 +5281,7 @@ function HealBot_Options_CDCTxt1_DropDown()
             UIDropDownMenu_AddButton(info);
         end
     end
-    for j=1, getn(RacialDebuffSpells_List), 1 do
+    for j=1, HB_LEN(RacialDebuffSpells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5278,7 +5289,7 @@ function HealBot_Options_CDCTxt1_DropDown()
         info.func = HealBot_Options_CDCTxt1_OnSelect;
         UIDropDownMenu_AddButton(info);
     end
-    for j=1, getn(HealBot_Debuff_Item_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_Item_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5297,7 +5308,7 @@ function HealBot_Options_CDCTxt2_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_CDCTxt2_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(DebuffSpells_List), 1 do
+    for j=1, HB_LEN(DebuffSpells_List), 1 do
         sName, _=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[j]));
         if sName then
             for x,_ in pairs(info) do
@@ -5308,7 +5319,7 @@ function HealBot_Options_CDCTxt2_DropDown()
             UIDropDownMenu_AddButton(info);
         end
     end
-    for j=1, getn(RacialDebuffSpells_List), 1 do
+    for j=1, HB_LEN(RacialDebuffSpells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5316,7 +5327,7 @@ function HealBot_Options_CDCTxt2_DropDown()
         info.func = HealBot_Options_CDCTxt2_OnSelect;
         UIDropDownMenu_AddButton(info);
     end
-    for j=1, getn(HealBot_Debuff_Item_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_Item_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5335,7 +5346,7 @@ function HealBot_Options_CDCTxt3_DropDown()
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_CDCTxt3_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for j=1, getn(DebuffSpells_List), 1 do
+    for j=1, HB_LEN(DebuffSpells_List), 1 do
         sName, _=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[j]));
         if sName then
             for x,_ in pairs(info) do
@@ -5346,7 +5357,7 @@ function HealBot_Options_CDCTxt3_DropDown()
             UIDropDownMenu_AddButton(info);
         end
     end
-    for j=1, getn(RacialDebuffSpells_List), 1 do
+    for j=1, HB_LEN(RacialDebuffSpells_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5354,7 +5365,7 @@ function HealBot_Options_CDCTxt3_DropDown()
         info.func = HealBot_Options_CDCTxt3_OnSelect;
         UIDropDownMenu_AddButton(info);
     end
-    for j=1, getn(HealBot_Debuff_Item_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_Item_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5365,7 +5376,7 @@ function HealBot_Options_CDCTxt3_DropDown()
 end
 
 function HealBot_Options_CDCGroups1_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5376,7 +5387,7 @@ function HealBot_Options_CDCGroups1_DropDown()
 end
 
 function HealBot_Options_CDCGroups2_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -5387,7 +5398,7 @@ function HealBot_Options_CDCGroups2_DropDown()
 end
 
 function HealBot_Options_CDCGroups3_DropDown()
-    for j=1, getn(HealBot_Options_BuffTxt_List), 1 do
+    for j=1, HB_LEN(HealBot_Options_BuffTxt_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end   
@@ -5453,7 +5464,7 @@ function HealBot_Options_CDCPriorityC_DropDown()
 end
 
 function HealBot_Options_CDCWarnRange1_DropDown()
-    for j=1, getn(HealBot_Debuff_RangeWarning_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_RangeWarning_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end   
@@ -5464,7 +5475,7 @@ function HealBot_Options_CDCWarnRange1_DropDown()
 end
 
 function HealBot_Options_CDCWarnRange2_DropDown()
-    for j=1, getn(HealBot_Debuff_RangeWarning_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_RangeWarning_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end   
@@ -5475,7 +5486,7 @@ function HealBot_Options_CDCWarnRange2_DropDown()
 end
 
 function HealBot_Options_CDCWarnRange3_DropDown()
-    for j=1, getn(HealBot_Debuff_RangeWarning_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_RangeWarning_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end   
@@ -5486,7 +5497,7 @@ function HealBot_Options_CDCWarnRange3_DropDown()
 end
 
 function HealBot_Options_CDCWarnRange4_DropDown()
-    for j=1, getn(HealBot_Debuff_RangeWarning_List), 1 do
+    for j=1, HB_LEN(HealBot_Debuff_RangeWarning_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end   
@@ -5892,7 +5903,7 @@ function HealBot_Options_CDebuffCat_genList()
         HealBot_Options_DeleteCDebuffBtn:Enable();
         HealBot_Options_ResetCDebuffBtn:Enable();
         table.sort(CDebuffCat_List)
-        for j=1, getn(CDebuffCat_List), 1 do
+        for j=1, HB_LEN(CDebuffCat_List), 1 do
             if CDebuffCat_List[j]==HealBot_Options_StorePrev["CDebuffcustomName"] then
                 HealBot_Options_StorePrev["CDebuffcustomID"]=j
                 x=true
@@ -5905,7 +5916,7 @@ function HealBot_Options_CDebuffCat_genList()
 end
 
 function HealBot_Options_CDebuffCat_DropDown()
-    for j=1, getn(HealBot_CDebuffCat_List), 1 do
+    for j=1, HB_LEN(HealBot_CDebuffCat_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end   
@@ -5941,7 +5952,7 @@ function HealBot_Options_CDebuffCat_OnSelect()
 end
 
 function HealBot_Options_CDebuffTxt1_DropDown() -- added by Diacono
-    for j=1, getn(CDebuffCat_List), 1 do
+    for j=1, HB_LEN(CDebuffCat_List), 1 do
         for x,_ in pairs(info) do
             info[x]=nil;
         end
@@ -7151,7 +7162,7 @@ function HealBot_Options_CheckCombos()
     for j=1,15 do
         HB_button=HealBot_Options_ComboClass_Button(j)
     
-        for x=1, getn(HealBot_CombosKeys_List), 1 do
+        for x=1, HB_LEN(HealBot_CombosKeys_List), 1 do
             HB_combo_prefix = HealBot_CombosKeys_List[x]..HB_button..HealBot_Config.CurrentSpec
 
             SpellTxtE = HealBot_Action_AttribSpellPattern(HB_combo_prefix)
